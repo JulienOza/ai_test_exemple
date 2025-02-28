@@ -14,9 +14,11 @@ test('Commander des souris sans fil sur Amazon', async ({ page }) => {
   await expect(page).toHaveTitle(/Amazon.fr/);
 
   // 2. Accepter les cookies (si la popup est présente)
-  const acceptCookies = page.locator('#sp-cc-accept');
-    await acceptCookies.click();  
-
+  const acceptCookies = page.locator('#sp-cc-accept'); 
+    if (await acceptCookies.isVisible()) {
+      await acceptCookies.click();
+    }
+  
   // 3. Rechercher des souris sans fil dans la barre de recherche
   await page.fill('#twotabsearchtextbox', SEARCH_TERM);
   await page.keyboard.press('Enter');

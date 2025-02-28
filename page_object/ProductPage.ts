@@ -1,12 +1,15 @@
-import { expect } from '@playwright/test';
-
+import { Page, expect } from '@playwright/test';
 export class ProductPage {
-  constructor(private page) {}
+  private page: Page;
+  private addToCartButton;
 
-  async addToCart() {
-    const addToCartButton = this.page.locator('#add-to-cart-button');
-    await expect(addToCartButton).toBeVisible();
-    await addToCartButton.click();
-    await this.page.waitForSelector('#sw-atc-confirmation');
+  constructor(page: Page) {
+    this.page = page;
+    this.addToCartButton = page.getByRole('button', { name: 'Ajouter au panier', exact: true });
+  }
+
+  async addToCart(): Promise<void> {
+    await expect(this.addToCartButton).toBeVisible();
+    await this.addToCartButton.click();
   }
 }

@@ -1,14 +1,21 @@
-import { expect } from '@playwright/test';
-
+import { Page, expect } from '@playwright/test';
 export class CartPage {
-  constructor(private page) {}
+  private page: Page;
+  private cartIcon;
+  private cartItems;
 
-  async gotoCart() {
-    await this.page.locator('#nav-cart').click();
+  constructor(page: Page) {
+    this.page = page;
+    this.cartIcon = page.locator('#nav-cart');
+    this.cartItems = page.locator('.sc-list-item');
+  }
+
+  async goToCart(): Promise<void> {
+    await this.cartIcon.click();
     await expect(this.page).toHaveURL(/cart/);
   }
 
-  async verifyProductInCart(expectedCount: number) {
-    await expect(this.page.locator('.sc-list-item')).toHaveCount(expectedCount);
+  async verifyProductInCart(): Promise<void> {
+    await expect(this.cartItems).toHaveCount(1);
   }
 }
