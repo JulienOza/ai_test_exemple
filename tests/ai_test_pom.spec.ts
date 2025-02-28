@@ -8,7 +8,7 @@ const BASE_URL = 'https://www.amazon.fr';
 const SEARCH_TERM = 'baskets';
 
 // Test principal
-test('Commander des baskets sur Amazon', async ({ page }) => {
+test('Commander des souris sans fil sur Amazon', async ({ page }) => {
   const amazonHomePage = new AmazonHomePage(page);
   const productPage = new ProductPage(page);
   const cartPage = new CartPage(page);
@@ -21,7 +21,7 @@ test('Commander des baskets sur Amazon', async ({ page }) => {
   await amazonHomePage.searchProduct(SEARCH_TERM);
 
   // 3. Sélectionner le premier produit
-  await amazonHomePage.selectFirstProduct('Publicité sponsorisée - Homme Hoops 3.0 Low Classic Vintage Shoes Chaussures');
+  await amazonHomePage.selectFirstProduct('link', { name: 'Logitech M185 Souris Sans Fil, 2.4 GHz avec Mini Récepteur USB, Longévité de la Pile 12 Mois, Résolution du Capteur 1000 PPP, Ambidextre, Compatible PC, Mac, Ordinateur Portable - Gris/Noir', exact: true });
 
   // 4. Ajouter l'article au panier
   await productPage.addToCart();

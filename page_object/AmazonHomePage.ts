@@ -10,9 +10,7 @@ export class AmazonHomePage {
 
   async acceptCookies() {
     const acceptCookies = this.page.locator('#sp-cc-accept');
-    if (await acceptCookies.isVisible()) {
       await acceptCookies.click();
-    }
   }
 
   async searchProduct(product: string) {
@@ -21,7 +19,7 @@ export class AmazonHomePage {
   }
 
   async selectFirstProduct(productName: string) {
-    const firstProduct = this.page.getByRole('link', { name: productName });
+    const firstProduct = this.page.getByRole(productName)
     await firstProduct.click();
   }
 }

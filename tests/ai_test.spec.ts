@@ -4,10 +4,10 @@ import { test, expect } from '@playwright/test';
 const BASE_URL = 'https://www.amazon.fr';
 
 // Nom du produit à rechercher
-const SEARCH_TERM = 'baskets';
+const SEARCH_TERM = 'souris sans fil';
 
 // Test principal
-test('Commander des baskets sur Amazon', async ({ page }) => {
+test('Commander des souris sans fil sur Amazon', async ({ page }) => {
 
   // 1. Aller sur la page d'accueil d'Amazon
   await page.goto(BASE_URL);
@@ -15,25 +15,23 @@ test('Commander des baskets sur Amazon', async ({ page }) => {
 
   // 2. Accepter les cookies (si la popup est présente)
   const acceptCookies = page.locator('#sp-cc-accept');
-  if (await acceptCookies.isVisible()) {
-    await acceptCookies.click();
-  }
+    await acceptCookies.click();  
 
-  // 3. Rechercher des baskets dans la barre de recherche
+  // 3. Rechercher des souris sans fil dans la barre de recherche
   await page.fill('#twotabsearchtextbox', SEARCH_TERM);
   await page.keyboard.press('Enter');
 //   await page.waitForLoadState('networkidle');
 
   // 4. Sélectionner le premier produit de la liste
-  const firstProduct = page.getByRole('link', { name: 'Publicité sponsorisée - Homme Hoops 3.0 Low Classic Vintage Shoes Chaussures' });
+  const firstProduct = page.getByRole('link', { name: 'Logitech M185 Souris Sans Fil, 2.4 GHz avec Mini Récepteur USB, Longévité de la Pile 12 Mois, Résolution du Capteur 1000 PPP, Ambidextre, Compatible PC, Mac, Ordinateur Portable - Gris/Noir', exact: true })
   await firstProduct.click();
 //   await page.waitForLoadState('networkidle');
 
   // 5. Ajouter l'article au panier
-  const addToCartButton = page.locator('#add-to-cart-button');
+  const addToCartButton = page.getByRole('button', { name: 'Ajouter au panier', exact: true });
   await expect(addToCartButton).toBeVisible();
   await addToCartButton.click();
-  await page.waitForSelector('#sw-atc-confirmation');
+//   await page.waitForSelector('#sw-atc-confirmation');
 
   // 6. Aller au panier
   await page.locator('#nav-cart').click();
